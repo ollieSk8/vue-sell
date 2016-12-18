@@ -6,7 +6,7 @@ var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
-
+var api=require('./api');
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // Define HTTP proxies to your custom API backend
@@ -14,6 +14,9 @@ var port = process.env.PORT || config.dev.port
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+var apiRouters = express.Router();
+api.setApi(app,apiRouters);
+
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
