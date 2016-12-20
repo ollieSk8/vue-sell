@@ -33,6 +33,17 @@
     <div class="detail-wrapper clearfix">
       <div class="detail-main">
         <h1 class="name">{{seller.name}}</h1>
+        <div class="star-wrapper">
+          <star :size="48" :score="seller.score"></star>
+          <sel-title tip-title="优惠信息"></sel-title>
+          <ul v-if="seller.supports" class="supports">
+            <li class="supports-item" v-for="item in seller.supports" track-by="$index">
+              <span class="icon" :class="classMap[seller.supports[$index].type]"></span>
+              <span class="text">{{seller.supports[$index].description}}</span>
+            </li>
+          </ul>
+          <sel-title tip-title="商家公告"></sel-title>
+        </div>
       </div>
     </div>
     <div class="detail-close" @click="hideDetail()">
@@ -42,10 +53,12 @@
 </div>
 </template>
 <script>
+    import star from 'components/star/star.vue';
+    import selTitle from 'components/title.vue';
     export default {
       data() {
         return {
-          detailShow: false
+          detailShow: true
         };
       },
       props: {
@@ -63,6 +76,10 @@
         hideDetail() {
           this.detailShow = false;
         }
+      },
+      components: {
+        'star': star,
+        'sel-title': selTitle
       }
     };
 </script>
@@ -223,6 +240,51 @@
             text-align:center;
             line-height:16px;
             font-weight:700;
+          }
+          .star-wrapper{
+            margin-top:18px;
+            padding:2px 0px;
+            text-align: center;
+            .supports{
+              width:80%;
+              margin:0 auto;
+              .supports-item{
+                padding:0px 12px;
+                margin-bottom:12px;
+                font-size:0px;
+                text-align: left;
+                &:last-child{
+                  margin-bottom:0px;
+                }
+                .icon{
+                  display:inline-block;
+                  width:16px;
+                  height:16px;
+                  vertical-align:top;
+                  margin-right:6px;
+                  background-size:16px 16px;
+                  &.decrease{
+                    .bg-image('../../components/header/decrease_2');
+                  }
+                  &.discount{
+                    .bg-image('../../components/header/discount_2');
+                  }
+                  &.guarantee{
+                    .bg-image('../../components/header/guarantee_2');
+                  }
+                  &.invoice{
+                    .bg-image('../../components/header/invoice_2');
+                  }
+                  &.special{
+                    .bg-image('../../components/header/special_2');
+                  }
+                }
+                .text{
+                  font-size:12px;
+                  line-height:16px;
+                }
+              }
+            }
           }
         }
       }
