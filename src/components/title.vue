@@ -1,5 +1,5 @@
 <template>
-  <div class="title">
+  <div class="tiptitle">
     <div class="line"></div>
     <div class="text">{{tipTitle}}</div>
     <div class="line"></div>
@@ -11,7 +11,7 @@
   };
 </script>
 <style lang="less" rel="stylesheet/less">
-  .title{
+  .tiptitle{
     display:flex;
     width:80%;
     margin:28px auto 24px auto;
