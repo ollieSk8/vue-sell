@@ -29,7 +29,7 @@
   <div class="background">
     <img :src="seller.avatar" alt="" width="100%" height="100%">
   </div>
-  <div class="detail" v-show="detailShow">
+  <div class="detail" v-show="detailShow" transition="fade">
     <div class="detail-wrapper clearfix">
       <div class="detail-main">
         <h1 class="name">{{seller.name}}</h1>
@@ -43,6 +43,11 @@
             </li>
           </ul>
           <sel-title tip-title="商家公告"></sel-title>
+          <div class="bulletin">
+            <p class="content">
+              {{seller.bulletin}}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -58,7 +63,7 @@
     export default {
       data() {
         return {
-          detailShow: true
+          detailShow: false
         };
       },
       props: {
@@ -229,6 +234,16 @@
       height:100%;
       overflow:auto;
       background-color:rgba(7,17,27,.8);
+      backdrop-filter:blur(10px);
+      transition:all 0.5s;
+      &.fade-transition {
+        opacity: 1;
+        background-color: rgba(7, 17, 27, .8);
+      }
+      &.fade-enter, &.fade-leave {
+        opacity: 0;
+        background-color: rgba(7, 17, 27, 0);
+      }
       .detail-wrapper{
         min-height:100%;
         width:100%;
@@ -283,6 +298,20 @@
                   font-size:12px;
                   line-height:16px;
                 }
+              }
+            }
+            .bulletin{
+              width:80%;
+              margin:0 auto;
+              font-size:0;
+              .content{
+                text-align: justify;
+                font-weight:200;
+                font-size:12px;
+                color:rgb(255,255,255);
+                line-height:24px;
+                box-sizing:border-box;
+                padding:0 12px;
               }
             }
           }
