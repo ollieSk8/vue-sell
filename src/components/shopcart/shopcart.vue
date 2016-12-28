@@ -12,7 +12,7 @@
       <div class="desc">另需配送费¥{{deliveryPrice}}元</div>
     </div>
     <div class="content-right">
-      <div class="pay" :class="payClass">
+      <div class="pay" :class="payClass" @click="showPrice">
         {{payDesc}}
       </div>
     </div>
@@ -20,6 +20,7 @@
 </div>
 </template>
 <script>
+  /*global alert*/
     export default {
       props: {
         selectFoods: {
@@ -66,6 +67,13 @@
         payClass() {
           if (this.totalPrice >= this.minPrice) {
             return 'enough';
+          }
+        }
+      },
+      methods: {
+        showPrice() {
+          if (this.totalPrice >= this.minPrice) {
+             alert('总共需要支付:' + (this.totalPrice + this.deliveryPrice) + '元');
           }
         }
       }

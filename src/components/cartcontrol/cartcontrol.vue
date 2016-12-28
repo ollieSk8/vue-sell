@@ -43,14 +43,14 @@
   .cart-decrease{
     display:inline-block;
     padding:6px;
-    font-size:24px;
-    line-height:24px;
-    color:rgb(0,160,220);
     transition:all .4s linear;
     &.move-transition{
       opacity:1;
       transform:translate3d(0,0,0);
       .inner{
+        font-size:24px;
+        line-height:24px;
+        color:rgb(0,160,220);
         display:inline-block;
         transition:all .4s linear;
         transform:rotate(0);
