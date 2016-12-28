@@ -30,18 +30,22 @@
                  <span class="now">¥{{food.price}}</span>
                  <span v-show="food.oldPrice" class="old">¥{{food.oldPrice}}</span>
                </div>
+               <div class="cartcontrol-wrapper">
+                 <cartcontrol :food="food"></cartcontrol>
+               </div>
              </div>
            </li>
          </ul>
        </li>
      </ul>
    </div>
-   <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :select-foods="[{price:20,count:1}]"></shopcart>
+   <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :select-foods="selectFoods"></shopcart>
  </div>
 </template>
 <script>
   import BScroll from 'better-scroll';
   import shopcart from 'components/shopcart/shopcart.vue';
+  import cartcontrol from 'components/cartcontrol/cartcontrol.vue';
   const ERR_OK = 0;
   export default {
     data() {
@@ -73,6 +77,7 @@
       _initScroll() {
         this.menuScroll = new BScroll(this.$els.menuWrapper, {click: true});
         this.foodScroll = new BScroll(this.$els.foodsWrapper, {
+          click: true,
           probeType: 3
         });
         this.foodScroll.on('scroll', (pos) => {
@@ -108,9 +113,23 @@
           };
         }
         return 0;
+      },
+      selectFoods() {
+        let foods = [];
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food);
+            }
+          });
+        });
+        return foods;
       }
     },
-    components: {shopcart}
+    components: {
+      shopcart: shopcart,
+      cartcontrol: cartcontrol
+    }
   };
 </script>
 <style lang="less" rel="stylesheet/less">
@@ -239,6 +258,11 @@
               font-size:10px;
               color:rgb(147,153,159);
             }
+          }
+          .cartcontrol-wrapper{
+            position:absolute;
+            right:0;
+            bottom:12px;
           }
         }
       }
