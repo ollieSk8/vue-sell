@@ -39,7 +39,7 @@
        </li>
      </ul>
    </div>
-   <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :select-foods="selectFoods"></shopcart>
+   <shopcart v-ref:shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" :select-foods="selectFoods"></shopcart>
  </div>
 </template>
 <script>
@@ -72,6 +72,14 @@
       }, (response) => {
 
       });
+    },
+    events: {
+      'cart.add': function (target) {
+        // 异步执行下落小球动画
+        this.$nextTick(() => {
+          this.$refs.shopcart._drop(target);
+        });
+      }
     },
     methods: {
       _initScroll() {
